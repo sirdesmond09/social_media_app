@@ -1,0 +1,43 @@
+# Virtual environment
+venv/
+.env
+
+# Database
+db.sqlite3
+
+# Static files
+staticfiles/
+
+# Media files
+media/
+
+# Local development settings
+local_settings.py
+
+# IDE files
+.vscode/
+*.idea/
+
+# Compiled Python files
+*.pyc
+
+# Log files
+*.log
+
+# Ignore migrations
+**/migrations/
+
+# Ignore secret key
+secret_key.txt
+
+# Ignore cache
+__pycache__/
+
+# Ignore environment variables file
+.env
+
+# Ignore any other sensitive or unnecessary files
+*.bak
+*.swp
+*.swo
+*.DS_Store
