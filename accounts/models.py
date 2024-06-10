@@ -82,6 +82,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.email} -- {self.role}"
+    
+    def get_full_name(self):
+        """Returns the full name of the user"""
+        
+        return f"{self.first_name} {self.last_name}"
 
     @property
     def image_url(self):

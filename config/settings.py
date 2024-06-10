@@ -50,6 +50,7 @@ class Common(Configuration):
         "corsheaders",
         "rest_framework_simplejwt.token_blacklist",
         "storages",
+        "channels",
     ]
 
     MIDDLEWARE = [
@@ -82,7 +83,17 @@ class Common(Configuration):
         },
     ]
 
-    WSGI_APPLICATION = "config.wsgi.application"
+    # WSGI_APPLICATION = "config.wsgi.application"
+    ASGI_APPLICATION = 'config.asgi.application'
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.pubsub.RedisPubSubChannelLayer",
+            "CONFIG": {
+                "hosts": [f"redis://{os.getenv('REDIS_HOST')}:{int(os.getenv('REDIS_PORT'))}"],
+                
+            },
+        },
+    }
 
     APPEND_SLASH = True
 
@@ -166,7 +177,7 @@ class Common(Configuration):
     }
 
     SIMPLE_JWT = {
-        "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+        "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
         "REFRESH_TOKEN_LIFETIME": timedelta(days=5),
         "UPDATE_LAST_LOGIN": True,
         "SIGNING_KEY": SECRET_KEY,
@@ -210,56 +221,56 @@ class Common(Configuration):
     EMAIL_USE_TLS = False
     DEFAULT_FROM_EMAIL = "Shakira from Voltrox"
 
-    # Configure the logging settings
-    LOG_DIR = os.path.join(BASE_DIR, "logs")
+    # # Configure the logging settings
+    # LOG_DIR = os.path.join(BASE_DIR, "logs")
 
-    # Ensure the logs directory exists
-    if not os.path.exists(LOG_DIR):
-        os.makedirs(LOG_DIR)
+    # # Ensure the logs directory exists
+    # if not os.path.exists(LOG_DIR):
+    #     os.makedirs(LOG_DIR)
 
-    # Logging configuration for errors
-    LOG_FILE_ERROR = os.path.join(LOG_DIR, "error.log")
-    LOGGING = {
-        "version": 1,
-        "disable_existing_loggers": False,
-        "handlers": {
-            "error_file": {
-                "level": "ERROR",
-                "class": "logging.FileHandler",
-                "filename": LOG_FILE_ERROR,
-                "formatter": "verbose",
-            },
-        },
-        "loggers": {
-            "django": {
-                "handlers": ["error_file"],
-                "level": "ERROR",
-                "propagate": True,
-            },
-        },
-    }
+    # # Logging configuration for errors
+    # LOG_FILE_ERROR = os.path.join(LOG_DIR, "error.log")
+    # LOGGING = {
+    #     "version": 1,
+    #     "disable_existing_loggers": False,
+    #     "handlers": {
+    #         "error_file": {
+    #             "level": "ERROR",
+    #             "class": "logging.FileHandler",
+    #             "filename": LOG_FILE_ERROR,
+    #             "formatter": "verbose",
+    #         },
+    #     },
+    #     "loggers": {
+    #         "django": {
+    #             "handlers": ["error_file"],
+    #             "level": "ERROR",
+    #             "propagate": True,
+    #         },
+    #     },
+    # }
 
-    # Logging configuration for server prints
-    LOG_FILE_SERVER = os.path.join(LOG_DIR, "server.log")
-    LOGGING["handlers"]["server_file"] = {
-        "level": "INFO",
-        "class": "logging.FileHandler",
-        "filename": LOG_FILE_SERVER,
-        "formatter": "verbose",
-    }
-    LOGGING["loggers"]["django.server"] = {
-        "handlers": ["server_file"],
-        "level": "INFO",
-        "propagate": False,
-    }
+    # # Logging configuration for server prints
+    # LOG_FILE_SERVER = os.path.join(LOG_DIR, "server.log")
+    # LOGGING["handlers"]["server_file"] = {
+    #     "level": "INFO",
+    #     "class": "logging.FileHandler",
+    #     "filename": LOG_FILE_SERVER,
+    #     "formatter": "verbose",
+    # }
+    # LOGGING["loggers"]["django.server"] = {
+    #     "handlers": ["server_file"],
+    #     "level": "INFO",
+    #     "propagate": False,
+    # }
 
-    # Logging formatter
-    LOGGING["formatters"] = {
-        "verbose": {
-            "format": "%(asctime)s [%(levelname)s] %(message)s",
-            "datefmt": "%Y-%m-%d %H:%M:%S",
-        },
-    }
+    # # Logging formatter
+    # LOGGING["formatters"] = {
+    #     "verbose": {
+    #         "format": "%(asctime)s [%(levelname)s] %(message)s",
+    #         "datefmt": "%Y-%m-%d %H:%M:%S",
+    #     },
+    # }
 
 
 class Development(Common):

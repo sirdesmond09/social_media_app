@@ -19,6 +19,7 @@ class PostSerializer(serializers.ModelSerializer):
     replies_count = serializers.IntegerField(source='replies.count', read_only=True)
     replies = ReplySerializer(many=True, read_only=True)
     tags = TagSerializer(many=True, required=False)
+    author = serializers.CharField(source='author.get_full_name', read_only=True)
 
     class Meta:
         model = Post
