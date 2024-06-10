@@ -18,6 +18,7 @@ Voltrox Social Media Task: Implement a basic backend system for user profiles an
 - Include multimedia support (images, videos) in posts.
 - Real-time updates without needing to refresh the page using django channels.
 - Implement user authentication and authorization.
+- Added signup and login with google 
 
 # Getting Started
 
