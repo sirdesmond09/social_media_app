@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from config import settings
 from djoser.signals import user_registered, user_activated
 
-from .models import ActivationOtp, TempStorage
+from .models import ActivationOtp
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.template.loader import render_to_string

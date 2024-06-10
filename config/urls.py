@@ -8,23 +8,23 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Desmond Project Template",
+        title="Voltrox Social Media",
         default_version="v1",
-        description="API for Desmond Template",
+        description="API for Voltrox HQ Media",
         terms_of_service="",
         contact=openapi.Contact(email="nnebuedesmond@gmail.com"),
         license=openapi.License(name="MIT License"),
     ),
     public=True,
-    permission_classes=(permissions.AllowAny,),
+    permission_classes=(permissions.AllowAny,), # change this to permissions.isauthenticated to block the documentation from public view
     authentication_classes=(authentication.BasicAuthentication,)
 )
 
 urlpatterns = [
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('admin/', admin.site.urls),
-    path('v1/', include('accounts.urls')),
-    path('v1/', include('main.urls')),
+    path('api/v1/', include('accounts.urls')),
+    path('api/v1/', include('social_media.urls')),
 ]
 
 if settings.DEBUG:

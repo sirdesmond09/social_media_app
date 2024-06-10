@@ -41,7 +41,8 @@ class Common(Configuration):
         "django_extensions",
         "debug_toolbar",
         "accounts.apps.AccountsConfig",
-        "social_auth",
+        "social_media.apps.SocialMediaConfig",
+        "social_auth.apps.SocialAuthConfig",
         "rest_framework",
         "djoser",
         "drf_yasg",
@@ -193,19 +194,12 @@ class Common(Configuration):
     # OAuth credentials
     GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 
-    # TODO: CHANNGE THIS TO AWS
-
-    # Azure Blob Storage settings or use any storage you want
-    AZURE_ACCOUNT_NAME = os.getenv("AZURE_ACCOUNT_NAME")
-    AZURE_CONTAINER = os.getenv("AZURE_CONTAINER")
-    AZURE_ACCOUNT_KEY = os.getenv("AZURE_ACCOUNT_KEY")
-    AZURE_CONNECTION_TIMEOUT_SECS = 60
-
-    DEFAULT_FILE_STORAGE = "storages.backends.azure_storage.AzureStorage"  # change to the correct storage backend from django-storages
-    AZURE_CUSTOM_DOMAIN = f"{AZURE_ACCOUNT_NAME}.blob.core.windows.net"
-
-    MEDIA_URL = f"https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/"
-    # MEDIA_ROOT = ''
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+    AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME")
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
     EMAIL_HOST = "smtp.mailgun.org"
